@@ -1,0 +1,43 @@
+body{
+font-family: Arial;
+background-image: url("bmi-bg.png");
+background-size: cover;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background: rgba(255,255,255,0.2);
+padding:40px;
+border-radius:15px;
+backdrop-filter: blur(10px);
+text-align:center;
+width:300px;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px;
+border:none;
+border-radius:5px;
+}
+
+button{
+background:#c4001a;
+color:white;
+padding:12px;
+border:none;
+border-radius:25px;
+width:150px;
+cursor:pointer;
+}
+
+.container + .container {
+    background: rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
