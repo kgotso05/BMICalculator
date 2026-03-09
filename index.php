@@ -1,44 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>BMI Calculator</h1>
-        
-        <form action="calculate.php" method="POST" class="bmi-form">
-            <div class="form-group">
-                <label for="firstname">First Name:</label>
-                <input type="text" id="firstname" name="firstname" placeholder="Enter first name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="lastname">Last Name:</label>
-                <input type="text" id="lastname" name="lastname" placeholder="Enter last name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter age" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="weight">Weight (kg):</label>
-                <input type="number" id="weight" name="weight" step="0.1" min="1" max="300" placeholder="Enter weight in kg" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="height">Height (m):</label>
-                <input type="number" id="height" name="height" step="0.01" min="0.5" max="2.5" placeholder="Enter height in meters (e.g., 1.75)" required>
-                <small class="hint">Enter height in meters (e.g., 1.75 for 175cm)</small>
-            </div>
-            
-            <button type="submit" class="btn-calculate">Calculate BMI</button>
-        </form>
-    </div>
-</body>
-</html>
+<?php
+// Include database connection
+include 'db_connect.php';
+
+// Get 5 most recent records (no date, so order by id DESC)
+$recent_sql = "SELECT * FROM calculations ORDER BY id DESC LIMIT 5";
+$recent_result = mysqli_query($conn, $recent_sql);
+?>
+
+<!-- Add this after your form closing tag -->
+<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+    <h3>Recent Calculations</h3>
+    <?php if ($recent_result && mysqli_num_rows($recent_result) > 0): ?>
+        <ul style="list-style: none; padding: 0;">
+            <?php while ($row = mysqli_fetch_assoc($recent_result)): ?>
+                <li style="padding: 8px 0; border-bottom: 1px dashed #e0e0e0;">
+                    <strong><?php echo htmlspecialchars($row['firstname'] . ' ' . $row['lastname']); ?></strong>
+                    <span style="float: right;">
+                        BMI: <?php echo $row['bmi']; ?> 
+                        <span style="color: <?php 
+                            echo ($row['status'] == 'Normal weight') ? '#28a745' : 
+                                 (($row['status'] == 'Underweight') ? '#ffc107' : 
+                                 (($row['status'] == 'Overweight') ? '#fd7e14' : '#dc3545')); 
+                        ?>;">(<?php echo $row['status']; ?>)</span>
+                    </span>
+                </li>
+            <?php endwhile; ?>
+        </ul>
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="view_records.php" style="color: #667eea; text-decoration: none; font-weight: 600;">
+                View All Records (<?php 
+                $count_sql = "SELECT COUNT(*) as total FROM calculations";
+                $count_result = mysqli_query($conn, $count_sql);
+                $count_row = mysqli_fetch_assoc($count_result);
+                echo $count_row['total'];
+                ?>) →
+            </a>
+        </div>
+    <?php else: ?>
+        <p style="color: #999; text-align: center;">No calculations yet. Be the first!</p>
+    <?php endif; ?>
+</div>
+
+<?php
+// Close connection
+mysqli_close($conn);
+?>

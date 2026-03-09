@@ -1,6 +1,9 @@
 <?php
-// Start session to store data
+// Start session
 session_start();
+
+// Include database connection
+include 'db_connect.php';
 
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,12 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     
-    // Calculate BMI using height in meters
-    // Formula: weight (kg) / (height (m))^2
+    // Calculate BMI
     $bmi = $weight / ($height * $height);
-    $bmi = round($bmi, 1); // Round to 1 decimal place
+    $bmi = round($bmi, 1);
     
-    // Determine BMI status based on WHO standards
+    // Determine BMI status
     if ($bmi < 18.5) {
         $status = "Underweight";
     } elseif ($bmi >= 18.5 && $bmi < 25) {
@@ -34,19 +36,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "Obese";
     }
     
-    // Store data in session
+    // Store in session for result.php
     $_SESSION['firstname'] = $firstname;
     $_SESSION['lastname'] = $lastname;
     $_SESSION['age'] = $age;
     $_SESSION['bmi'] = $bmi;
     $_SESSION['status'] = $status;
     
-    // Redirect to results page - NOTE: using result.php (singular)
+    // INSERT INTO DATABASE (no date field)
+    $sql = "INSERT INTO calculations (firstname, lastname, age, weight, height, bmi, status) 
+            VALUES ('$firstname', '$lastname', $age, $weight, $height, $bmi, '$status')";
+    
+    $result = mysqli_query($conn, $sql);
+    
+    // Check if insert was successful
+    if (!$result) {
+        // For debugging (remove in production)
+        echo "Error: " . mysqli_error($conn);
+        exit();
+    }
+    
+    // Redirect to results page
     header("Location: result.php");
     exit();
     
 } else {
-    // If someone tries to access this page directly without POST
     header("Location: index.php");
     exit();
 }

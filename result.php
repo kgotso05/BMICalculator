@@ -4,7 +4,6 @@ session_start();
 
 // Check if session data exists
 if (!isset($_SESSION['firstname']) || !isset($_SESSION['bmi'])) {
-    // No data found, redirect to home page
     header("Location: index.php");
     exit();
 }
@@ -15,9 +14,6 @@ $lastname = $_SESSION['lastname'];
 $age = $_SESSION['age'];
 $bmi = $_SESSION['bmi'];
 $status = $_SESSION['status'];
-
-// Clear session data after retrieving (optional)
-// session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +22,26 @@ $status = $_SESSION['status'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI Results</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .view-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .view-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            display: inline-block;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .view-link a:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -69,7 +85,11 @@ $status = $_SESSION['status'];
         </div>
         
         <div class="button-group">
-            <a href="index.php" class="btn-back">Back to Calculator</a>
+            <a href="index.php" class="btn-back">New Calculation</a>
+        </div>
+        
+        <div class="view-link">
+            <a href="view_records.php">📊 View All Saved Records</a>
         </div>
     </div>
 </body>
