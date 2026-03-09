@@ -1,62 +1,44 @@
-<?php
-$bmi = $status = "";
-$firstname = $lastname = $age = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $age = $_POST['age'];
-    $height = $_POST['height'];
-    $weight = $_POST['weight'];
-
-    $bmi = $weight / ($height * $height);
-
-    if ($bmi < 18.5) {
-        $status = "Underweight";
-    } elseif ($bmi < 25) {
-        $status = "Normal Weight";
-    } elseif ($bmi < 30) {
-        $status = "Overweight";
-    } else {
-        $status = "Obese";
-    }
-}
-?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>BMI Calculator</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
-
-<h1>BMI Calculator</h1>
-
-<form method="POST" action="">
-    <input type="text" name="firstname" placeholder="First Name" required value="<?php echo $firstname; ?>">
-    <input type="text" name="lastname" placeholder="Last Name" required value="<?php echo $lastname; ?>">
-    <input type="number" name="age" placeholder="Age" required value="<?php echo $age; ?>">
-    <input type="number" step="0.01" name="height" placeholder="Height (meters)" required>
-    <input type="number" step="0.01" name="weight" placeholder="Weight (kg)" required>
-    <button type="submit">Calculate BMI</button>
-</form>
-
-<?php if($bmi != ""): ?>
-<div class="container" style="margin-top:20px;">
-    <h2>Results</h2>
-    <p><strong>First Name:</strong> <?php echo $firstname; ?></p>
-    <p><strong>Last Name:</strong> <?php echo $lastname; ?></p>
-    <p><strong>Age:</strong> <?php echo $age; ?></p>
-    <p><strong>BMI:</strong> <?php echo round($bmi, 2); ?></p>
-    <p><strong>Status:</strong> <?php echo $status; ?></p>
-</div>
-<?php endif; ?>
-
-</div>
-
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        
+        <form action="calculate.php" method="POST" class="bmi-form">
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Enter first name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Enter last name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter age" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" step="0.1" min="1" max="300" placeholder="Enter weight in kg" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="height">Height (m):</label>
+                <input type="number" id="height" name="height" step="0.01" min="0.5" max="2.5" placeholder="Enter height in meters (e.g., 1.75)" required>
+                <small class="hint">Enter height in meters (e.g., 1.75 for 175cm)</small>
+            </div>
+            
+            <button type="submit" class="btn-calculate">Calculate BMI</button>
+        </form>
+    </div>
 </body>
 </html>

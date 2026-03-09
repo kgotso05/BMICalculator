@@ -1,43 +1,153 @@
-body{
-font-family: Arial;
-background-image: url("bmi-bg.png");
-background-size: cover;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container{
-background: rgba(255,255,255,0.2);
-padding:40px;
-border-radius:15px;
-backdrop-filter: blur(10px);
-text-align:center;
-width:300px;
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-input{
-width:90%;
-padding:10px;
-margin:10px;
-border:none;
-border-radius:5px;
+.container {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 400px;
 }
 
-button{
-background:#c4001a;
-color:white;
-padding:12px;
-border:none;
-border-radius:25px;
-width:150px;
-cursor:pointer;
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
 }
 
-.container + .container {
-    background: rgba(255,255,255,0.2);
+.bmi-form .form-group {
+    margin-bottom: 20px;
+}
+
+.bmi-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+.bmi-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.bmi-form input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.bmi-form .hint {
+    display: block;
+    color: #6c757d;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.btn-calculate {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-calculate:hover {
+    background: #764ba2;
+}
+
+/* Results page styles */
+.result-card {
+    background: #f8f9fa;
+    border-radius: 8px;
     padding: 20px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.value {
+    color: #212529;
+}
+
+.status-underweight {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-normal-weight {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-overweight {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.status-obese {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn-back:hover {
+    background: #5a6268;
+}
+
+.button-group {
+    text-align: center;
+}
+
+/* Error message style */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
 }
